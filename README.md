@@ -34,3 +34,4 @@ The app will also have a reporting feature to analyze the number of finished tas
 
 
 ## ERD
+![image](https://github.com/ldgze/task-tracker/blob/main/C.%20ERD%20.png)
