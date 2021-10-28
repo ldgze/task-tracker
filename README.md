@@ -28,3 +28,9 @@ Each task can have 0 or more subtasks. The subtask has the name and status of ei
 ## Others:
 The app will support filters such as the “Unscheduled work tasks”, “Important tasks in the next 2 weeks”, "Older than a month", "assigned to me" and so on, which demands queries contain a join of at least three tables, subquery, and complex search criterion.
 The app will also have a reporting feature to analyze the number of finished tasks grouped by list, or month, which will demand queries using the clause of "GROUP BY", "HAVING" and “PARTITION BY ”.
+
+## UML
+https://github.com/ldgze/task-tracker/blob/main/B.%20UML%20-%20Page%201.png
+
+
+## ERD
