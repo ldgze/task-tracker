@@ -60,7 +60,7 @@ There will be many to many relationships (task-tag) and one to many (user- task,
 
 
 ## SQL file (text file) with the table definitions and creation SQL statements that can be executed with SQLite3.
-- https://github.com/ldgze/task-tracker/blob/main/E1.db.sql
+- [E1.db.sql](https://github.com/ldgze/task-tracker/blob/main/E1.db.sql)
 
 ## Define and execute at least five queries that show your database.
-- 
+- [E2. sql](https://github.com/ldgze/task-tracker/blob/main/E2.sql)
