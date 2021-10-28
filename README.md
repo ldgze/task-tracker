@@ -30,7 +30,7 @@ The app will support filters such as the “Unscheduled work tasks”, “Import
 The app will also have a reporting feature to analyze the number of finished tasks grouped by list, or month, which will demand queries using the clause of "GROUP BY", "HAVING" and “PARTITION BY ”.
 
 ## UML
-https://github.com/ldgze/task-tracker/blob/main/B.%20UML%20-%20Page%201.png
+![image](https://github.com/ldgze/task-tracker/blob/main/B.%20UML%20-%20Page%201.png)
 
 
 ## ERD
