@@ -39,22 +39,22 @@ There will be many to many relationships (task-tag) and one to many (user- task,
 ## Definition of relational schema with proof that it is in BCNF.
 - Tag(tagID, name) 
     - tagID -> name, tagID is a superkey
-Tag_Task(tagID, taskID)
-{tagID, taskID} -> {tagID, taskID} is a trivial FD
-Task(taskID, listID, title, dueDate, createDate, URL, priority, status) 
-taskID -> {listID, title, dueDate, createDate, URL, priority, status}, taskID is a superkey
-User(userID, firstName, lastName, email)
-userID -> {firstName, lastName}, userID is a superkey
-email -> {firstName, lastName}, email is a superkey
-Creator(userID, taskID)
-{userID, taskID} -> {userID, taskID} is a trivial FD
-Assignment(userID, taskID)
-{userID, taskID} -> {userID, taskID} is a trivial FD
-SubtaskID(subtaskID, taskID, title, status)
-subtaskID -> {taskID, title, status}, subtaskID is a superkey
-ListID(listID, name)
-listID -> name, listID is a superkey
-Comment(commentID, taskID, content, updateAt)
-commentID -> {taskID, content, updateAt}, commentID is a superkey
+- Tag_Task(tagID, taskID)
+    - {tagID, taskID} -> {tagID, taskID} is a trivial FD
+- Task(taskID, listID, title, dueDate, createDate, URL, priority, status) 
+    - taskID -> {listID, title, dueDate, createDate, URL, priority, status}, taskID is a superkey
+- User(userID, firstName, lastName, email)
+    - userID -> {firstName, lastName}, userID is a superkey
+    - email -> {firstName, lastName}, email is a superkey
+- Creator(userID, taskID)
+    - {userID, taskID} -> {userID, taskID} is a trivial FD
+- Assignment(userID, taskID)
+    - {userID, taskID} -> {userID, taskID} is a trivial FD
+- SubtaskID(subtaskID, taskID, title, status)
+    - subtaskID -> {taskID, title, status}, subtaskID is a superkey
+- ListID(listID, name)
+    - listID -> name, listID is a superkey
+- Comment(commentID, taskID, content, updateAt)
+    - commentID -> {taskID, content, updateAt}, commentID is a superkey
 
 
