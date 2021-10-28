@@ -12,6 +12,7 @@ We’ll have 6 classes in the UML:
 - Subtask
 - User
 - Comment
+
 There will be many to many relationships (task-tag) and one to many (user- task, list-task, task-comment, task-subtask) relationships between the classes.
 
 ## Part 1: task-user-tags: Dongze Li
