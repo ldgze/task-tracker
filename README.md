@@ -59,3 +59,8 @@ There will be many to many relationships (task-tag) and one to many (user- task,
     - commentID -> {taskID, content, updateAt}, commentID is a superkey
 
 
+## SQL file (text file) with the table definitions and creation SQL statements that can be executed with SQLite3.
+- https://github.com/ldgze/task-tracker/blob/main/E1.db.sql
+
+## Define and execute at least five queries that show your database.
+- 
