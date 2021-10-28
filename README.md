@@ -20,7 +20,7 @@ Each user has a userID, first name, last name, and email. Users can create tasks
 Users can assign tasks to another user. The default assignee of the task is the creator.
 The task has two kinds of status: todo and done. 
 Each task can have 0 or more tags. Each tag has a name. Each tag can also be added to 0 or more tasks
-## Part 2: task-list-subtask-comment Shuyi Wang
+## Part 2: task-list-subtask-comment: Shuyi Wang
 The assignee can make multiple comments on the task.
 Each Comment has an update time and a content. The task can have 0 or more comments.
 Each List has a name. The tasks can be moved to a list. The list can have 0 or more tasks.
