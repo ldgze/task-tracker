@@ -38,7 +38,7 @@ There will be many to many relationships (task-tag) and one to many (user- task,
 
 ## Definition of relational schema with proof that it is in BCNF.
 - Tag(tagID, name) 
--- tagID -> name, tagID is a superkey
+    - tagID -> name, tagID is a superkey
 Tag_Task(tagID, taskID)
 {tagID, taskID} -> {tagID, taskID} is a trivial FD
 Task(taskID, listID, title, dueDate, createDate, URL, priority, status) 
