@@ -2,11 +2,11 @@
 <ul>
   <% for (let a of tags) { %>
   <li>
-    <a href="<%= '/tags/' + a._id + '/edit'  %>"><%= a.name %></a>
-    <a href="<%= '/references/' + ref.reference_id + '/removeTag/' + a.tag_id   %>">❌</a>
+    <a href="<%= '/tags/' + a.tagID + '/edit'  %>"><%= a.name %></a>
+    <a href="<%= '/tags/' + a.tagID + '/removeTag/' + a.tagID   %>">❌</a>
   </li>
   <% } %>
 </ul>
 
 
-<%- include("../components/formAddTag.ejs", { ref }) %>
+<%- include("../components/formAddTag.ejs", { task }) %>
