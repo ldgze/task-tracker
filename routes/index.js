@@ -79,17 +79,17 @@ router.get("/tasks/:taskID/edit", async (req, res, next) => {
 
   const msg = req.query.msg || null;
   try {
-    let tsk = await myDb.getTaskByID(taskID);
+    let task = await myDb.getTaskByID(taskID);
     let tags = await myDb.getTagsByTaskID(taskID);
 
     console.log("edit task", {
-      tsk,
+      task,
       tags,
       msg,
     });
 
     res.render("./pages/editTask", {
-      tsk,
+      task,
       tags,
       msg,
     });

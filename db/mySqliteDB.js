@@ -148,7 +148,7 @@ async function getTaskByID(taskID) {
 
   const stmt = await db.prepare(`
     SELECT * FROM Task
-    WHERE Task.taskID = taskID;
+    WHERE taskID = @taskID;
     `);
 
   const params = {
@@ -278,7 +278,8 @@ async function getTagsByTaskID(taskID) {
   const stmt = await db.prepare(`
     SELECT * FROM Tag_Task
     JOIN Task
-    WHERE Task.taskID = Tag_Task.taskID;
+    ON Tag_Task.taskID = Task.taskID
+    WHERE Tag_Task.taskID = @taskID;
     `);
 
   const params = {
