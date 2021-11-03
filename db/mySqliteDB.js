@@ -1,18 +1,48 @@
 const sqlite3 = require("sqlite3");
 const { open } = require("sqlite");
 
-async function getReferences(query, page, pageSize) {
-  console.log("getReferences", query);
+// async function getReferences(query, page, pageSize) {
+//   console.log("getReferences", query);
+
+//   const db = await open({
+//     filename: "./db/database.db",
+//     driver: sqlite3.Database,
+//   });
+
+//   const stmt = await db.prepare(`
+//     SELECT * FROM Reference
+//     WHERE title LIKE @query
+//     ORDER BY created_on DESC
+//     LIMIT @pageSize
+//     OFFSET @offset;
+//     `);
+
+//   const params = {
+//     "@query": query + "%",
+//     "@pageSize": pageSize,
+//     "@offset": (page - 1) * pageSize,
+//   };
+
+//   try {
+//     return await stmt.all(params);
+//   } finally {
+//     await stmt.finalize();
+//     db.close();
+//   }
+// }
+
+async function getTasks(query, page, pageSize) {
+  console.log("getTasks", query);
 
   const db = await open({
-    filename: "./db/database.db",
+    filename: "./db/taskDB.db",
     driver: sqlite3.Database,
   });
 
   const stmt = await db.prepare(`
-    SELECT * FROM Reference
+    SELECT * FROM Task
     WHERE title LIKE @query
-    ORDER BY created_on DESC
+    ORDER BY createDate DESC
     LIMIT @pageSize
     OFFSET @offset;
     `);
@@ -31,17 +61,43 @@ async function getReferences(query, page, pageSize) {
   }
 }
 
-async function getReferencesCount(query) {
-  console.log("getReferences", query);
+// async function getReferencesCount(query) {
+//   console.log("getReferences", query);
+
+//   const db = await open({
+//     filename: "./db/database.db",
+//     driver: sqlite3.Database,
+//   });
+
+//   const stmt = await db.prepare(`
+//     SELECT COUNT(*) AS count
+//     FROM Reference
+//     WHERE title LIKE @query;
+//     `);
+
+//   const params = {
+//     "@query": query + "%",
+//   };
+
+//   try {
+//     return (await stmt.get(params)).count;
+//   } finally {
+//     await stmt.finalize();
+//     db.close();
+//   }
+// }
+
+async function getTasksCount(query) {
+  console.log("getTasks", query);
 
   const db = await open({
-    filename: "./db/database.db",
+    filename: "./db/taskDB.db",
     driver: sqlite3.Database,
   });
 
   const stmt = await db.prepare(`
     SELECT COUNT(*) AS count
-    FROM Reference
+    FROM Task
     WHERE title LIKE @query;
     `);
 
@@ -57,21 +113,46 @@ async function getReferencesCount(query) {
   }
 }
 
-async function getReferenceByID(reference_id) {
-  console.log("getReferenceByID", reference_id);
+// async function getReferenceByID(reference_id) {
+//   console.log("getReferenceByID", reference_id);
+
+//   const db = await open({
+//     filename: "./db/database.db",
+//     driver: sqlite3.Database,
+//   });
+
+//   const stmt = await db.prepare(`
+//     SELECT * FROM Reference
+//     WHERE reference_id = @reference_id;
+//     `);
+
+//   const params = {
+//     "@reference_id": reference_id,
+//   };
+
+//   try {
+//     return await stmt.get(params);
+//   } finally {
+//     await stmt.finalize();
+//     db.close();
+//   }
+// }
+
+async function getTaskByID(taskID) {
+  console.log("getTaskByID", taskID);
 
   const db = await open({
-    filename: "./db/database.db",
+    filename: "./db/taskDB.db",
     driver: sqlite3.Database,
   });
 
   const stmt = await db.prepare(`
-    SELECT * FROM Reference
-    WHERE reference_id = @reference_id;
+    SELECT * FROM Task
+    WHERE Task.taskID = taskID;
     `);
 
   const params = {
-    "@reference_id": reference_id,
+    "@taskID": taskID,
   };
 
   try {
@@ -160,23 +241,48 @@ async function insertReference(ref) {
   }
 }
 
+// async function getAuthorsByReferenceID(reference_id) {
+//   console.log("getAuthorsByReferenceID", reference_id);
 
-async function getAuthorsByReferenceID(reference_id) {
-  console.log("getAuthorsByReferenceID", reference_id);
+//   const db = await open({
+//     filename: "./db/database.db",
+//     driver: sqlite3.Database,
+//   });
+
+//   const stmt = await db.prepare(`
+//     SELECT * FROM Reference_Author
+//     NATURAL JOIN Author
+//     WHERE reference_id = @reference_id;
+//     `);
+
+//   const params = {
+//     "@reference_id": reference_id,
+//   };
+
+//   try {
+//     return await stmt.all(params);
+//   } finally {
+//     await stmt.finalize();
+//     db.close();
+//   }
+// }
+
+async function getTagsByTaskID(taskID) {
+  console.log("getTagsByTaskID", taskID);
 
   const db = await open({
-    filename: "./db/database.db",
+    filename: "./db/taskDB.db",
     driver: sqlite3.Database,
   });
 
   const stmt = await db.prepare(`
-    SELECT * FROM Reference_Author
-    NATURAL JOIN Author
-    WHERE reference_id = @reference_id;
+    SELECT * FROM Tag_Task
+    JOIN Task
+    WHERE Task.taskID = Tag_Task.taskID;
     `);
 
   const params = {
-    "@reference_id": reference_id,
+    "@taskID": taskID,
   };
 
   try {
@@ -186,7 +292,6 @@ async function getAuthorsByReferenceID(reference_id) {
     db.close();
   }
 }
-
 
 async function addAuthorIDToReferenceID(reference_id, author_id) {
   console.log("addAuthorIDToReferenceID", reference_id, author_id);
@@ -215,13 +320,15 @@ async function addAuthorIDToReferenceID(reference_id, author_id) {
   }
 }
 
-
-
-module.exports.getReferences = getReferences;
-module.exports.getReferencesCount = getReferencesCount;
+//module.exports.getReferences = getReferences;
+module.exports.getTasks = getTasks;
+//module.exports.getReferencesCount = getReferencesCount;
+module.exports.getTasksCount = getTasksCount;
 module.exports.insertReference = insertReference;
-module.exports.getReferenceByID = getReferenceByID;
+//module.exports.getReferenceByID = getReferenceByID;
+module.exports.getTaskByID = getTaskByID;
 module.exports.updateReferenceByID = updateReferenceByID;
 module.exports.deleteReferenceByID = deleteReferenceByID;
-module.exports.getAuthorsByReferenceID = getAuthorsByReferenceID;
+//module.exports.getAuthorsByReferenceID = getAuthorsByReferenceID;
+module.exports.getTagsByTaskID = getTagsByTaskID;
 module.exports.addAuthorIDToReferenceID = addAuthorIDToReferenceID;

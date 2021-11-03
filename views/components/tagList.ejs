@@ -1,0 +1,12 @@
+<h2>Tags:</h2>
+<ul>
+  <% for (let a of tags) { %>
+  <li>
+    <a href="<%= '/tags/' + a._id + '/edit'  %>"><%= a.name %></a>
+    <a href="<%= '/references/' + ref.reference_id + '/removeTag/' + a.tag_id   %>">❌</a>
+  </li>
+  <% } %>
+</ul>
+
+
+<%- include("../components/formAddTag.ejs", { ref }) %>
