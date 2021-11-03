@@ -6,6 +6,7 @@
       <div class="card p-1">
         <h5 class="card-title"><%= task.title %></h5>
         <div class="card-text">
+
           <div><%= task.dueDate %></div>
           <div><%= task.list %></div>
           <div><%= task.status %></div>
@@ -13,7 +14,7 @@
           <div><%= task.tags %></div>
 
           <div>
-            <a class="btn btn-outline-primary" href="<%= '/tasks/' + taskID + '/edit' %>">Edit</a>
+            <a class="btn btn-outline-primary" href="<%= '/tasks/' + task.taskID + '/edit' %>">Edit</a>
             <a class="btn btn-outline-danger" href="<%= '/tasks/' + task.taskID + '/delete' %>">Delete</a>
             <a class="btn btn-outline-danger" href="<%= '/tasks/' + task.taskID + '/finish' %>">Finish</a>
 

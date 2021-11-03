@@ -1,7 +1,7 @@
 <h2>Task</h2>
 
 <form
-  action=" <%= '/references/' + ref.reference_id + '/edit' %>"
+  action=" <%= '/tasks/' + task.taskID + '/edit' %>"
   method="POST"
 >
 
@@ -11,8 +11,8 @@
       <input
         class="form-control"
         type="text"
-        name="reference_id"
-        value="<%= ref.reference_id %>"
+        name="taskID"
+        value="<%= task.taskID %>"
         disabled
       />
     </label>
@@ -25,7 +25,7 @@
         class="form-control"
         type="text"
         name="title"
-        value="<%= ref.title %>"
+        value="<%= task.title %>"
       />
     </label>
   </div>
@@ -36,7 +36,7 @@
       <input
         class="form-control"
         type="text"
-        name="published_on"
+        name="dueDate"
         value="<%= ref.published_on %>"
       />
     </label>
@@ -45,7 +45,7 @@
   <button type="submit" class="btn btn-primary">Edit</button>
   <a
     class="btn btn-danger"
-    href="<%= '/references/' + ref.reference_id + '/delete' %>"
+    href="<%= '/tasks/' + task.taskID + '/delete' %>"
     >Delete</a
   >
 </form>
