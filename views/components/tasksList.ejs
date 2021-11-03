@@ -1,0 +1,30 @@
+<h2>Tasks</h2>
+<div class="row g-3">
+  <% for (let task of tasks) { %>
+
+    <div class="col-4">
+      <div class="card p-1">
+        <h5 class="card-title"><%= task.title %></h5>
+        <div class="card-text">
+          <div><%= task.due_date %></div>
+          <div><%= task.list %></div>
+          <div><%= task.status %></div>
+          <div><%= task.priority %></div>
+          <div><%= task.tags %></div>
+
+          <div>
+            <a class="btn btn-outline-primary" href="<%= '/tasks/' + task.task_id + '/edit' %>">Edit</a>
+            <a class="btn btn-outline-danger" href="<%= '/tasks/' + task.task_id + '/delete' %>">Delete</a>
+            <a class="btn btn-outline-danger" href="<%= '/tasks/' + task.task_id + '/finish' %>">Finish</a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  <% } %>
+
+ <%- include("./pagination.ejs", { currentPage, lastPage }) %>
+
+</div>
