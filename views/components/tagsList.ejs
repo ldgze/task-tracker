@@ -1,14 +1,13 @@
 <h2>Tags</h2>
 <div class="row g-3">
-  <% for (let tag of tsgs) { %>
+  <% for (let tag of tags) { %>
 
     <div class="col-4">
       <div class="card p-1">
         <h5 class="card-title"><%= tag.name %></h5>
         <div class="card-text">
-
           <div>
-            <a class="btn btn-outline-danger" href="<%= '/tags/' + tag.tag_id + '/delete' %>">Delete</a>
+            <a class="btn btn-outline-danger" href="<%= '/tags/' + tag.tagID + '/delete' %>">Delete</a>
           </div>
           
         </div>

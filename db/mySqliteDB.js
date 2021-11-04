@@ -255,6 +255,111 @@ async function removeTagIDFromTaskID(taskID, tagID) {
   }
 }
 
+
+
+async function getTags(query, page, pageSize) {
+  console.log("getTags", query);
+
+  const db = await open({
+    filename: "./db/taskDB.db",
+    driver: sqlite3.Database,
+  });
+
+  const stmt = await db.prepare(`
+    SELECT * FROM Tag
+    WHERE name LIKE @query
+    ORDER BY name
+    LIMIT @pageSize
+    OFFSET @offset;
+    `);
+
+  const params = {
+    "@query": query + "%",
+    "@pageSize": pageSize,
+    "@offset": (page - 1) * pageSize,
+  };
+
+  try {
+    return await stmt.all(params);
+  } finally {
+    await stmt.finalize();
+    db.close();
+  }
+}
+
+async function getTagsCount(query) {
+  console.log("getTags", query);
+
+  const db = await open({
+    filename: "./db/taskDB.db",
+    driver: sqlite3.Database,
+  });
+
+  const stmt = await db.prepare(`
+    SELECT COUNT(*) AS count
+    FROM Tag
+    WHERE name LIKE @query;
+    `);
+
+  const params = {
+    "@query": query + "%",
+  };
+
+  try {
+    return (await stmt.get(params)).count;
+  } finally {
+    await stmt.finalize();
+    db.close();
+  }
+}
+
+async function deleteTagByID(tagID) {
+  console.log("deleteReferenceByID", tagID);
+
+  const db = await open({
+    filename: "./db/taskDB.db",
+    driver: sqlite3.Database,
+  });
+
+  const stmt = await db.prepare(`
+    DELETE FROM Tag
+    WHERE
+       tagID = @tagID;
+    `);
+
+  const params = {
+    "@tagID": tagID,
+  };
+
+  try {
+    return await stmt.run(params);
+  } finally {
+    await stmt.finalize();
+    db.close();
+  }
+}
+
+
+async function insertTag(tag) {
+  const db = await open({
+    filename: "./db/taskDB.db",
+    driver: sqlite3.Database,
+  });
+
+  const stmt = await db.prepare(`INSERT INTO
+    Tag
+    VALUES (@tagID, @name);`);
+
+  try {
+    return await stmt.run({
+      "@name": tag.name,
+    });
+  } finally {
+    await stmt.finalize();
+    db.close();
+  }
+}
+
 module.exports.getTasks = getTasks;
 module.exports.getTasksCount = getTasksCount;
 module.exports.insertTask = insertTask;
@@ -264,3 +369,7 @@ module.exports.deleteTaskByID = deleteTaskByID;
 module.exports.getTagsByTaskID = getTagsByTaskID;
 module.exports.addTagIDToTaskID = addTagIDToTaskID;
 module.exports.removeTagIDFromTaskID = removeTagIDFromTaskID;
+module.exports.getTags = getTags;
+module.exports.getTagsCount = getTagsCount;
+module.exports.deleteTagByID = deleteTagByID;
+module.exports.insertTag = insertTag;
