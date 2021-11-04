@@ -1,4 +1,4 @@
-# task-tracker
+# task-tracker overview
 An application that lets the users organize and manage tasks. 
 
 
@@ -65,3 +65,36 @@ There will be many to many relationships (task-tag) and one to many (user- task,
 
 ## Define and execute at least five queries that show your database.
 - [E2.sql](https://github.com/ldgze/task-tracker/blob/main/E2.sql)
+
+
+
+# Implementation of the task-tracker nodeExpressSqliteEJS Application
+An Application Using Node + Expres + SQlite + EJS implementing a simple task manager
+
+## Using it
+
+1) Clone the repo
+2) Install the dependencies
+
+```
+npm install
+```
+
+
+3) Start the server
+
+```
+npm start
+```
+
+4) Point your browser to http://locahost:3000
+
+5) In the browser, you can overview the all listed tasks. And you can create a new task on the left right column with title, dueDate, URL, and priority.
+
+6) To edit, update, or delete the exist task; simply click on the exist tasks and enter the information or tags inside the task. 
+
+7) To mark finish the task, simply click on finish on the exist task.
+
+8) You can also add/delete tags or lists manually by clicking on the tag or list bar on the top of the browser.
+
+
