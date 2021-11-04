@@ -1,36 +1,6 @@
 const sqlite3 = require("sqlite3");
 const { open } = require("sqlite");
 
-// async function getReferences(query, page, pageSize) {
-//   console.log("getReferences", query);
-
-//   const db = await open({
-//     filename: "./db/database.db",
-//     driver: sqlite3.Database,
-//   });
-
-//   const stmt = await db.prepare(`
-//     SELECT * FROM Reference
-//     WHERE title LIKE @query
-//     ORDER BY created_on DESC
-//     LIMIT @pageSize
-//     OFFSET @offset;
-//     `);
-
-//   const params = {
-//     "@query": query + "%",
-//     "@pageSize": pageSize,
-//     "@offset": (page - 1) * pageSize,
-//   };
-
-//   try {
-//     return await stmt.all(params);
-//   } finally {
-//     await stmt.finalize();
-//     db.close();
-//   }
-// }
-
 async function getTasks(query, page, pageSize) {
   console.log("getTasks", query);
 
@@ -61,32 +31,6 @@ async function getTasks(query, page, pageSize) {
   }
 }
 
-// async function getReferencesCount(query) {
-//   console.log("getReferences", query);
-
-//   const db = await open({
-//     filename: "./db/database.db",
-//     driver: sqlite3.Database,
-//   });
-
-//   const stmt = await db.prepare(`
-//     SELECT COUNT(*) AS count
-//     FROM Reference
-//     WHERE title LIKE @query;
-//     `);
-
-//   const params = {
-//     "@query": query + "%",
-//   };
-
-//   try {
-//     return (await stmt.get(params)).count;
-//   } finally {
-//     await stmt.finalize();
-//     db.close();
-//   }
-// }
-
 async function getTasksCount(query) {
   console.log("getTasks", query);
 
@@ -112,31 +56,6 @@ async function getTasksCount(query) {
     db.close();
   }
 }
-
-// async function getReferenceByID(reference_id) {
-//   console.log("getReferenceByID", reference_id);
-
-//   const db = await open({
-//     filename: "./db/database.db",
-//     driver: sqlite3.Database,
-//   });
-
-//   const stmt = await db.prepare(`
-//     SELECT * FROM Reference
-//     WHERE reference_id = @reference_id;
-//     `);
-
-//   const params = {
-//     "@reference_id": reference_id,
-//   };
-
-//   try {
-//     return await stmt.get(params);
-//   } finally {
-//     await stmt.finalize();
-//     db.close();
-//   }
-// }
 
 async function getTaskByID(taskID) {
   console.log("getTaskByID", taskID);
@@ -223,52 +142,38 @@ async function deleteTaskByID(taskID) {
   }
 }
 
-// async function insertReference(ref) {
-//   const db = await open({
-//     filename: "./db/database.db",
-//     driver: sqlite3.Database,
-//   });
+async function insertTask(task) {
+  const db = await open({
+    filename: "./db/taskDB.db",
+    driver: sqlite3.Database,
+  });
 
-//   const stmt = await db.prepare(`INSERT INTO
-//     Reference(title, published_on)
-//     VALUES (@title, @published_on);`);
+  const stmt = await db.prepare(`INSERT INTO
+    Task(title, dueDate, URL, priority, createDate, status)
 
-//   try {
-//     return await stmt.run({
-//       "@title": ref.title,
-//       "@published_on": ref.published_on,
-//     });
-//   } finally {
-//     await stmt.finalize();
-//     db.close();
-//   }
-// }
+    VALUES(@title, 
+    @dueDate, 
+    @URL, 
+    CASE @priority
+    WHEN "low" THEN "0"
+    WHEN "medium" THEN "1"
+    WHEN "high" THEN "2",
+    CURRENT_DATE,
+    "0")
+    `);
 
-// async function getAuthorsByReferenceID(reference_id) {
-//   console.log("getAuthorsByReferenceID", reference_id);
-
-//   const db = await open({
-//     filename: "./db/database.db",
-//     driver: sqlite3.Database,
-//   });
-
-//   const stmt = await db.prepare(`
-//     SELECT * FROM Reference_Author
-//     NATURAL JOIN Author
-//     WHERE reference_id = @reference_id;
-//     `);
-
-//   const params = {
-//     "@reference_id": reference_id,
-//   };
-
-//   try {
-//     return await stmt.all(params);
-//   } finally {
-//     await stmt.finalize();
-//     db.close();
-//   }
-// }
+  try {
+    return await stmt.run({
+      "@title": task.title,
+      "@dueDate": task.dueDate,
+      "@URL": task.URL,
+      "@priority": task.priority,
+    });
+  } finally {
+    await stmt.finalize();
+    db.close();
+  }
+}
 
 async function getTagsByTaskID(taskID) {
   console.log("getTagsByTaskID", taskID);
@@ -298,33 +203,6 @@ async function getTagsByTaskID(taskID) {
     db.close();
   }
 }
-
-// async function addAuthorIDToReferenceID(reference_id, author_id) {
-//   console.log("addAuthorIDToReferenceID", reference_id, author_id);
-
-//   const db = await open({
-//     filename: "./db/database.db",
-//     driver: sqlite3.Database,
-//   });
-
-//   const stmt = await db.prepare(`
-//     INSERT INTO
-//     Reference_Author(reference_id, author_id)
-//     VALUES (@reference_id, @author_id);
-//     `);
-
-//   const params = {
-//     "@reference_id": reference_id,
-//     "@author_id": author_id,
-//   };
-
-//   try {
-//     return await stmt.run(params);
-//   } finally {
-//     await stmt.finalize();
-//     db.close();
-//   }
-// }
 
 async function addTagIDToTaskID(taskID, tagID) {
   console.log("addTagIDToTaskID", taskID, tagID);
@@ -380,16 +258,12 @@ async function removeTagIDFromTaskID(taskID, tagID) {
   }
 }
 
-//module.exports.getReferences = getReferences;
 module.exports.getTasks = getTasks;
-//module.exports.getReferencesCount = getReferencesCount;
 module.exports.getTasksCount = getTasksCount;
-//module.exports.insertReference = insertReference;
-//module.exports.getReferenceByID = getReferenceByID;
+module.exports.insertTask = insertTask;
 module.exports.getTaskByID = getTaskByID;
 //module.exports.updateReferenceByID = updateReferenceByID;
 module.exports.deleteTaskByID = deleteTaskByID;
-//module.exports.getAuthorsByReferenceID = getAuthorsByReferenceID;
 module.exports.getTagsByTaskID = getTagsByTaskID;
 module.exports.addTagIDToTaskID = addTagIDToTaskID;
 module.exports.removeTagIDFromTaskID = removeTagIDFromTaskID;

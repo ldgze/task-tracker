@@ -224,4 +224,18 @@ router.get("/tasks/:taskID/delete", async (req, res, next) => {
 //   }
 // });
 
+router.post("/createTask", async (req, res, next) => {
+  const task = req.body;
+
+  try {
+    const insertRes = await myDb.insertTask(task);
+
+    console.log("Inserted", insertRes);
+    res.redirect("/tasks/?msg=Inserted");
+  } catch (err) {
+    console.log("Error inserting", err);
+    next(err);
+  }
+});
+
 module.exports = router;
