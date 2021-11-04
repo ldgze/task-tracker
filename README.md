@@ -99,6 +99,6 @@ npm start
 
 8) You can search the exist tasks, tags, and lists at the search bar of each pages,
 
-9) You can also add/delete tags or lists manually by clicking on the tag or list bar on the top of the browser.
+9) You can also add/delete tags or lists manually by clicking on the tag or list bar on the top of the browser. (Or you can also point your browser to  http://locahost:3000/tags or http://locahost:3000/lists)
 
 
