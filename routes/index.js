@@ -288,4 +288,53 @@ router.post("/createTag", async (req, res, next) => {
   }
 });
 
+router.get("/lists", async (req, res, next) => {
+
+  const query = req.query.q || "";
+  const page = +req.query.page || 1;
+  const pageSize = +req.query.pageSize || 24;
+  const msg = req.query.msg || null;
+  try {
+    let total = await myDb.getListsCount(query);
+    let lists = await myDb.getLists(query, page, pageSize);
+    console.log({ lists })
+    console.log({ total })
+    res.render("./pages/lists", {
+      lists,
+      query,
+      msg,
+      currentPage: page,
+      lastPage: Math.ceil(total / pageSize),
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+
+
+router.get("/lists/:listID/delete", async(req, res, next) => {
+  const listID = req.params.listID;
+  try{
+    await myDb.deleteListByID(listID);
+    res.redirect('/lists');
+  }catch(err){
+    next(err);
+  }
+});
+
+router.post("/createList", async (req, res, next) => {
+  const list = req.body;
+
+  try {
+    const insertList = await myDb.insertList(list);
+
+    console.log("Inserted", insertList);
+    res.redirect("/lists/?msg=Inserted");
+  } catch (err) {
+    console.log("Error inserting", err);
+    next(err);
+  }
+});
+
 module.exports = router;
