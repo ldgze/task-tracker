@@ -154,10 +154,7 @@ async function insertTask(task) {
     VALUES(@title, 
     @dueDate, 
     @URL, 
-    CASE @priority
-    WHEN "low" THEN "0"
-    WHEN "medium" THEN "1"
-    WHEN "high" THEN "2",
+    @priority,
     CURRENT_DATE,
     "0")
     `);
