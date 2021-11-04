@@ -118,6 +118,35 @@ async function updateTaskByID(taskID, task) {
   }
 }
 
+async function finishTaskByID(taskID) {
+  console.log("finishTaskByID", taskID);
+
+  const db = await open({
+    filename: "./db/taskDB.db",
+    driver: sqlite3.Database,
+  });
+
+  const stmt = await db.prepare(`
+    UPDATE Task
+    SET
+      status = 1
+
+    WHERE
+       taskID = @taskID;
+    `);
+
+  const params = {
+    "@taskID": taskID,
+  };
+
+  try {
+    return await stmt.run(params);
+  } finally {
+    await stmt.finalize();
+    db.close();
+  }
+}
+
 async function deleteTaskByID(taskID) {
   console.log("deleteTaskByID", taskID);
 
@@ -481,3 +510,4 @@ module.exports.deleteListByID = deleteListByID;
 module.exports.insertList = insertList;
 module.exports.deleteTagByID = deleteTagByID;
 module.exports.insertTag = insertTag;
+module.exports.finishTaskByID = finishTaskByID;

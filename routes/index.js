@@ -194,23 +194,6 @@ router.get("/tasks/:taskID/removeTag/:tagID", async (req, res, next) => {
   }
 });
 
-// router.get("/references/:reference_id/delete", async (req, res, next) => {
-//   const reference_id = req.params.reference_id;
-
-//   try {
-//     let deleteResult = await myDb.deleteReferenceByID(reference_id);
-//     console.log("delete", deleteResult);
-
-//     if (deleteResult && deleteResult.changes === 1) {
-//       res.redirect("/references/?msg=Deleted");
-//     } else {
-//       res.redirect("/references/?msg=Error Deleting");
-//     }
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
 router.get("/tasks/:taskID/delete", async (req, res, next) => {
   const taskID = req.params.taskID;
 
@@ -222,6 +205,23 @@ router.get("/tasks/:taskID/delete", async (req, res, next) => {
       res.redirect("/tasks/?msg=Deleted");
     } else {
       res.redirect("/tasks/?msg=Error Deleting");
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/tasks/:taskID/finish", async (req, res, next) => {
+  const taskID = req.params.taskID;
+
+  try {
+    let finishResult = await myDb.finishTaskByID(taskID);
+    console.log("finish", finishResult);
+
+    if (finishResult && finishResult.changes === 1) {
+      res.redirect("/tasks/?msg=Finished");
+    } else {
+      res.redirect("/tasks/?msg=Error Fiishing");
     }
   } catch (err) {
     next(err);
@@ -289,7 +289,6 @@ router.post("/createTag", async (req, res, next) => {
 });
 
 router.get("/lists", async (req, res, next) => {
-
   const query = req.query.q || "";
   const page = +req.query.page || 1;
   const pageSize = +req.query.pageSize || 24;
@@ -297,8 +296,8 @@ router.get("/lists", async (req, res, next) => {
   try {
     let total = await myDb.getListsCount(query);
     let lists = await myDb.getLists(query, page, pageSize);
-    console.log({ lists })
-    console.log({ total })
+    console.log({ lists });
+    console.log({ total });
     res.render("./pages/lists", {
       lists,
       query,
@@ -311,14 +310,12 @@ router.get("/lists", async (req, res, next) => {
   }
 });
 
-
-
-router.get("/lists/:listID/delete", async(req, res, next) => {
+router.get("/lists/:listID/delete", async (req, res, next) => {
   const listID = req.params.listID;
-  try{
+  try {
     await myDb.deleteListByID(listID);
-    res.redirect('/lists');
-  }catch(err){
+    res.redirect("/lists");
+  } catch (err) {
     next(err);
   }
 });
