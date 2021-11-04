@@ -350,6 +350,32 @@ async function addTagIDToTaskID(taskID, tagID) {
   }
 }
 
+async function removeTagIDFromTaskID(taskID, tagID) {
+  console.log("removeTagIDFromTaskID", taskID, tagID);
+
+  const db = await open({
+    filename: "./db/taskDB.db",
+    driver: sqlite3.Database,
+  });
+
+  const stmt = await db.prepare(`
+    DELETE FROM
+    Tag_Task
+    WHERE taskID=@taskID AND tagID=@tagID;
+    `);
+
+  const params = {
+    "@taskID": taskID,
+    "@tagID": tagID,
+  };
+
+  try {
+    return await stmt.run(params);
+  } finally {
+    await stmt.finalize();
+    db.close();
+  }
+}
 //module.exports.getReferences = getReferences;
 module.exports.getTasks = getTasks;
 //module.exports.getReferencesCount = getReferencesCount;
@@ -362,3 +388,5 @@ module.exports.getTaskByID = getTaskByID;
 //module.exports.getAuthorsByReferenceID = getAuthorsByReferenceID;
 module.exports.getTagsByTaskID = getTagsByTaskID;
 module.exports.addTagIDToTaskID = addTagIDToTaskID;
+
+module.exports.removeTagIDFromTaskID = removeTagIDFromTaskID;

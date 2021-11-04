@@ -42,7 +42,26 @@
     </label>
   </div>
 
-  <button type="submit" class="btn btn-primary">Edit</button>
+  <div>
+    <label class="form-label">
+      URL:
+      <input class="form-control" type="text" name="URL" value="<%= task.URL %>"/>
+    </label>
+  </div>
+
+   <div>
+    <label class="form-group">
+      Priority:
+      <select class="form-control" type="text" name="priority" 
+      value="<%= task.priority %>"/>
+        <option>low</option>
+        <option>medium</option>
+        <option>hign</option>
+    </select>
+    </label>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Update</button>
   <a
     class="btn btn-danger"
     href="<%= '/tasks/' + task.taskID + '/delete' %>"

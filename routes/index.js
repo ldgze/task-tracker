@@ -157,6 +157,25 @@ router.post("/tasks/:taskID/addTag", async (req, res, next) => {
   }
 });
 
+router.get("/tasks/:taskID/removeTag/:tagID", async (req, res, next) => {
+  console.log("Remove Tag", req.body);
+  const taskID = req.params.taskID;
+  const tagID = req.params.tagID;
+
+  try {
+    let updateResult = await myDb.removeTagIDFromTaskID(taskID, tagID);
+    console.log("removeTagIDFromTaskID", updateResult);
+
+    if (updateResult && updateResult.changes === 1) {
+      res.redirect(`/tasks/${taskID}/edit?msg=Tag removed`);
+    } else {
+      res.redirect(`/tasks/${taskID}/edit?msg=Error removing tag`);
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 // router.get("/references/:reference_id/delete", async (req, res, next) => {
 //   const reference_id = req.params.reference_id;
 
