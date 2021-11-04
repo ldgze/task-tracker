@@ -82,36 +82,41 @@ async function getTaskByID(taskID) {
   }
 }
 
-// async function updateReferenceByID(reference_id, ref) {
-//   console.log("updateReferenceByID", reference_id, ref);
+async function updateTaskByID(taskID, task) {
+  console.log("updateTaskByID", taskID, task);
 
-//   const db = await open({
-//     filename: "./db/database.db",
-//     driver: sqlite3.Database,
-//   });
+  const db = await open({
+    filename: "./db/taskDB.db",
+    driver: sqlite3.Database,
+  });
 
-//   const stmt = await db.prepare(`
-//     UPDATE Reference
-//     SET
-//       title = @title,
-//       published_on = @published_on
-//     WHERE
-//        reference_id = @reference_id;
-//     `);
+  const stmt = await db.prepare(`
+    UPDATE Task
+    SET
+      title = @title,
+      dueDate = @dueDate,
+      URL = @URL,
+      priority = @priority
 
-//   const params = {
-//     "@reference_id": reference_id,
-//     "@title": ref.title,
-//     "@published_on": ref.published_on,
-//   };
+    WHERE
+       taskID = @taskID;
+    `);
 
-//   try {
-//     return await stmt.run(params);
-//   } finally {
-//     await stmt.finalize();
-//     db.close();
-//   }
-// }
+  const params = {
+    "@taskID": taskID,
+    "@title": task.title,
+    "@dueDate": task.dueDate,
+    "@URL": task.URL,
+    "@priority": task.priority,
+  };
+
+  try {
+    return await stmt.run(params);
+  } finally {
+    await stmt.finalize();
+    db.close();
+  }
+}
 
 async function deleteTaskByID(taskID) {
   console.log("deleteTaskByID", taskID);
@@ -255,8 +260,6 @@ async function removeTagIDFromTaskID(taskID, tagID) {
   }
 }
 
-
-
 async function getTags(query, page, pageSize) {
   console.log("getTags", query);
 
@@ -339,7 +342,6 @@ async function deleteTagByID(tagID) {
   }
 }
 
-
 async function insertTag(tag) {
   const db = await open({
     filename: "./db/taskDB.db",
@@ -364,7 +366,7 @@ module.exports.getTasks = getTasks;
 module.exports.getTasksCount = getTasksCount;
 module.exports.insertTask = insertTask;
 module.exports.getTaskByID = getTaskByID;
-//module.exports.updateReferenceByID = updateReferenceByID;
+module.exports.updateTaskByID = updateTaskByID;
 module.exports.deleteTaskByID = deleteTaskByID;
 module.exports.getTagsByTaskID = getTagsByTaskID;
 module.exports.addTagIDToTaskID = addTagIDToTaskID;

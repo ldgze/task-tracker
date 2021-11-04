@@ -116,6 +116,24 @@ router.get("/tasks/:taskID/edit", async (req, res, next) => {
 //   }
 // });
 
+router.post("/tasks/:taskID/edit", async (req, res, next) => {
+  const taskID = req.params.taskID;
+  const task = req.body;
+
+  try {
+    let updateResult = await myDb.updateTaskByID(taskID, task);
+    console.log("update", updateResult);
+
+    if (updateResult && updateResult.changes === 1) {
+      res.redirect("/tasks/?msg=Updated");
+    } else {
+      res.redirect("/tasks/?msg=Error Updating");
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 // router.post("/references/:reference_id/addAuthor", async (req, res, next) => {
 //   console.log("Add author", req.body);
 //   const reference_id = req.params.reference_id;
@@ -210,20 +228,6 @@ router.get("/tasks/:taskID/delete", async (req, res, next) => {
   }
 });
 
-// router.post("/createReference", async (req, res, next) => {
-//   const ref = req.body;
-
-//   try {
-//     const insertRes = await myDb.insertReference(ref);
-
-//     console.log("Inserted", insertRes);
-//     res.redirect("/references/?msg=Inserted");
-//   } catch (err) {
-//     console.log("Error inserting", err);
-//     next(err);
-//   }
-// });
-
 router.post("/createTask", async (req, res, next) => {
   const task = req.body;
 
@@ -238,9 +242,7 @@ router.post("/createTask", async (req, res, next) => {
   }
 });
 
-
 router.get("/tags", async (req, res, next) => {
-
   const query = req.query.q || "";
   const page = +req.query.page || 1;
   const pageSize = +req.query.pageSize || 24;
@@ -248,8 +250,8 @@ router.get("/tags", async (req, res, next) => {
   try {
     let total = await myDb.getTagsCount(query);
     let tags = await myDb.getTags(query, page, pageSize);
-    console.log({ tags })
-    console.log({ total })
+    console.log({ tags });
+    console.log({ total });
     res.render("./pages/tags", {
       tags,
       query,
@@ -262,15 +264,15 @@ router.get("/tags", async (req, res, next) => {
   }
 });
 
-router.get("/tags/:id/delete", async(req, res, next) => {
+router.get("/tags/:id/delete", async (req, res, next) => {
   const id = req.params.id;
-  try{
+  try {
     await myDb.deleteTagByID(id);
-    res.redirect('/tags');
-  }catch(err){
+    res.redirect("/tags");
+  } catch (err) {
     next(err);
   }
-})
+});
 
 router.post("/createTag", async (req, res, next) => {
   const tag = req.body;
