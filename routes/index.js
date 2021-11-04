@@ -238,4 +238,52 @@ router.post("/createTask", async (req, res, next) => {
   }
 });
 
+
+router.get("/tags", async (req, res, next) => {
+
+  const query = req.query.q || "";
+  const page = +req.query.page || 1;
+  const pageSize = +req.query.pageSize || 24;
+  const msg = req.query.msg || null;
+  try {
+    let total = await myDb.getTagsCount(query);
+    let tags = await myDb.getTags(query, page, pageSize);
+    console.log({ tags })
+    console.log({ total })
+    res.render("./pages/tags", {
+      tags,
+      query,
+      msg,
+      currentPage: page,
+      lastPage: Math.ceil(total / pageSize),
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/tags/:id/delete", async(req, res, next) => {
+  const id = req.params.id;
+  try{
+    await myDb.deleteTagByID(id);
+    res.redirect('/tags');
+  }catch(err){
+    next(err);
+  }
+})
+
+router.post("/createTag", async (req, res, next) => {
+  const tag = req.body;
+
+  try {
+    const insertTag = await myDb.insertTag(tag);
+
+    console.log("Inserted", insertTag);
+    res.redirect("/tags/?msg=Inserted");
+  } catch (err) {
+    console.log("Error inserting", err);
+    next(err);
+  }
+});
+
 module.exports = router;
