@@ -2,8 +2,9 @@
 <ul>
   <% for (let a of tags) { %>
   <li>
-    <a href="<%= '/tags/' + a.tagID + '/edit'  %>"><%= a.name %></a>
-    <a href="<%= '/tags/' + a.tagID + '/removeTag/' + a.tagID   %>">❌</a>
+    <a><%=a.name%></a>
+
+    <a href="<%= '/tasks/' + task.taskID + '/removeTag/' + a.tagID %>">❌</a>
   </li>
   <% } %>
 </ul>

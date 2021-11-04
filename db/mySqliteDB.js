@@ -276,7 +276,9 @@ async function getTagsByTaskID(taskID) {
   });
 
   const stmt = await db.prepare(`
-    SELECT * FROM Tag_Task
+    SELECT * FROM Tag
+    JOIN Tag_Task
+    ON Tag_Task.tagID = Tag.tagID
     JOIN Task
     ON Tag_Task.taskID = Task.taskID
     WHERE Tag_Task.taskID = @taskID;
