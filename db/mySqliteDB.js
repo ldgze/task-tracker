@@ -360,6 +360,108 @@ async function insertTag(tag) {
   }
 }
 
+async function getLists(query, page, pageSize) {
+  console.log("getLists", query);
+
+  const db = await open({
+    filename: "./db/taskDB.db",
+    driver: sqlite3.Database,
+  });
+
+  const stmt = await db.prepare(`
+    SELECT * FROM List
+    WHERE name LIKE @query
+    ORDER BY name
+    LIMIT @pageSize
+    OFFSET @offset;
+    `);
+
+  const params = {
+    "@query": query + "%",
+    "@pageSize": pageSize,
+    "@offset": (page - 1) * pageSize,
+  };
+
+  try {
+    return await stmt.all(params);
+  } finally {
+    await stmt.finalize();
+    db.close();
+  }
+}
+
+async function getListsCount(query) {
+  console.log("getLists", query);
+
+  const db = await open({
+    filename: "./db/taskDB.db",
+    driver: sqlite3.Database,
+  });
+
+  const stmt = await db.prepare(`
+    SELECT COUNT(*) AS count
+    FROM List
+    WHERE name LIKE @query;
+    `);
+
+  const params = {
+    "@query": query + "%",
+  };
+
+  try {
+    return (await stmt.get(params)).count;
+  } finally {
+    await stmt.finalize();
+    db.close();
+  }
+}
+
+async function deleteListByID(listID) {
+  console.log("deleteListByID", listID);
+
+  const db = await open({
+    filename: "./db/taskDB.db",
+    driver: sqlite3.Database,
+  });
+
+  const stmt = await db.prepare(`
+    DELETE FROM List
+    WHERE
+       listID = @listID;
+    `);
+
+  const params = {
+    "@listID": listID,
+  };
+
+  try {
+    return await stmt.run(params);
+  } finally {
+    await stmt.finalize();
+    db.close();
+  }
+}
+
+async function insertList(list) {
+  const db = await open({
+    filename: "./db/taskDB.db",
+    driver: sqlite3.Database,
+  });
+
+  const stmt = await db.prepare(`INSERT INTO
+    List
+    VALUES (@listID, @name);`);
+
+  try {
+    return await stmt.run({
+      "@name": list.name,
+    });
+  } finally {
+    await stmt.finalize();
+    db.close();
+  }
+}
+
 module.exports.getTasks = getTasks;
 module.exports.getTasksCount = getTasksCount;
 module.exports.insertTask = insertTask;
@@ -371,5 +473,9 @@ module.exports.addTagIDToTaskID = addTagIDToTaskID;
 module.exports.removeTagIDFromTaskID = removeTagIDFromTaskID;
 module.exports.getTags = getTags;
 module.exports.getTagsCount = getTagsCount;
+module.exports.getLists = getLists;
+module.exports.getListsCount = getListsCount;
+module.exports.deleteListByID = deleteListByID;
+module.exports.insertList = insertList;
 module.exports.deleteTagByID = deleteTagByID;
 module.exports.insertTag = insertTag;
