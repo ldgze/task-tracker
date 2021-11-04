@@ -193,6 +193,23 @@ router.get("/tasks/:taskID/removeTag/:tagID", async (req, res, next) => {
 //   }
 // });
 
+router.get("/tasks/:taskID/delete", async (req, res, next) => {
+  const taskID = req.params.taskID;
+
+  try {
+    let deleteResult = await myDb.deleteTaskByID(taskID);
+    console.log("delete", deleteResult);
+
+    if (deleteResult && deleteResult.changes === 1) {
+      res.redirect("/tasks/?msg=Deleted");
+    } else {
+      res.redirect("/tasks/?msg=Error Deleting");
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 // router.post("/createReference", async (req, res, next) => {
 //   const ref = req.body;
 

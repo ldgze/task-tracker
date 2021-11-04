@@ -194,31 +194,34 @@ async function getTaskByID(taskID) {
 //   }
 // }
 
-// async function deleteReferenceByID(reference_id) {
-//   console.log("deleteReferenceByID", reference_id);
+async function deleteTaskByID(taskID) {
+  console.log("deleteTaskByID", taskID);
 
-//   const db = await open({
-//     filename: "./db/database.db",
-//     driver: sqlite3.Database,
-//   });
+  const db = await open({
+    filename: "./db/taskDB.db",
+    driver: sqlite3.Database,
+  });
 
-//   const stmt = await db.prepare(`
-//     DELETE FROM Reference
-//     WHERE
-//        reference_id = @reference_id;
-//     `);
+  const stmt = await db.prepare(`
+    DELETE FROM Task
+    WHERE
+       taskID = @taskID;
+    DELETE FROM Tag_Task
+    WHERE
+       taskID = @taskID;
+    `);
 
-//   const params = {
-//     "@reference_id": reference_id,
-//   };
+  const params = {
+    "@taskID": taskID,
+  };
 
-//   try {
-//     return await stmt.run(params);
-//   } finally {
-//     await stmt.finalize();
-//     db.close();
-//   }
-// }
+  try {
+    return await stmt.run(params);
+  } finally {
+    await stmt.finalize();
+    db.close();
+  }
+}
 
 // async function insertReference(ref) {
 //   const db = await open({
@@ -376,6 +379,7 @@ async function removeTagIDFromTaskID(taskID, tagID) {
     db.close();
   }
 }
+
 //module.exports.getReferences = getReferences;
 module.exports.getTasks = getTasks;
 //module.exports.getReferencesCount = getReferencesCount;
@@ -384,9 +388,8 @@ module.exports.getTasksCount = getTasksCount;
 //module.exports.getReferenceByID = getReferenceByID;
 module.exports.getTaskByID = getTaskByID;
 //module.exports.updateReferenceByID = updateReferenceByID;
-//module.exports.deleteReferenceByID = deleteReferenceByID;
+module.exports.deleteTaskByID = deleteTaskByID;
 //module.exports.getAuthorsByReferenceID = getAuthorsByReferenceID;
 module.exports.getTagsByTaskID = getTagsByTaskID;
 module.exports.addTagIDToTaskID = addTagIDToTaskID;
-
 module.exports.removeTagIDFromTaskID = removeTagIDFromTaskID;
