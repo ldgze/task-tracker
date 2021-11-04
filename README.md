@@ -87,14 +87,18 @@ npm install
 npm start
 ```
 
-4) Point your browser to http://locahost:3000
+4) Point your browser to http://localhost:3000
 
-5) In the browser, you can overview the all listed tasks. And you can create a new task on the left right column with title, dueDate, URL, and priority.
+5) In the browser (Or you can also point your browser to  http://localhost:3000/tasks), you can overview the all listed tasks.
 
-6) To edit, update, or delete the exist task; simply click on the exist tasks and enter the information or tags inside the task. 
+6) You can create a new task on the right column with title, dueDate, URL, and priority by clicking on the create button.
 
-7) To mark finish the task, simply click on finish on the exist task.
+6) To edit, update, or delete the exist task; simply click on the button on exist tasks and enter the information or tags to the tasks at the next browser appear. (tasks and tags are linked)
 
-8) You can also add/delete tags or lists manually by clicking on the tag or list bar on the top of the browser.
+7) To mark as finishing the task, simply click on finish button on the exist task.
+
+8) You can search the exist tasks, tags, and lists at the search bar of each pages,
+
+9) You can also add/delete tags or lists manually by clicking on the tag or list bar on the top of the browser. (Or you can also point your browser to  http://localhost:3000/tags or http://localhost:3000/lists)
 
 
