@@ -91,11 +91,11 @@ npm start
 
 5) In the browser (Or you can also point your browser to  http://locahost:3000/tasks), you can overview the all listed tasks.
 
-6) You can create a new task on the left right column with title, dueDate, URL, and priority.
+6) You can create a new task on the right column with title, dueDate, URL, and priority by clicking on the create button.
 
-6) To edit, update, or delete the exist task; simply click on the exist tasks and enter the information or tags inside the task. (tasks and tags are linked)
+6) To edit, update, or delete the exist task; simply click on the button on exist tasks and enter the information or tags to the tasks at the next browser appear. (tasks and tags are linked)
 
-7) To mark as finishing the task, simply click on finish on the exist task.
+7) To mark as finishing the task, simply click on finish button on the exist task.
 
 8) You can search the exist tasks, tags, and lists at the search bar of each pages,
 
