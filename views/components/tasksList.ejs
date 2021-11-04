@@ -7,12 +7,12 @@
         <h5 class="card-title"><%= task.title %></h5>
         <div class="card-text">
 
-          <div><%= task.createDate %></div>
-          <div><%= task.dueDate %></div>
+          <div><%= "createDate: " + task.createDate %></div>
+          <div><%= "dueDate: " +task.dueDate %></div>
+          <div><%= "URL: " +task.URL %></div>
           <div><%= task.list %></div>
-          <div><%= task.status %></div>
-          <div><%= task.priority %></div>
-          <div><%= task.tags %></div>
+          <div><%= "status: " +task.status %></div>
+          <div><%= "priority: " + task.priority %></div>
 
           <div>
             <a class="btn btn-outline-primary" href="<%= '/tasks/' + task.taskID + '/edit' %>">Edit</a>
