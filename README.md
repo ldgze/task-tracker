@@ -87,9 +87,9 @@ npm install
 npm start
 ```
 
-4) Point your browser to http://locahost:3000
+4) Point your browser to http://localhost:3000
 
-5) In the browser (Or you can also point your browser to  http://locahost:3000/tasks), you can overview the all listed tasks.
+5) In the browser (Or you can also point your browser to  http://localhost:3000/tasks), you can overview the all listed tasks.
 
 6) You can create a new task on the right column with title, dueDate, URL, and priority by clicking on the create button.
 
@@ -99,6 +99,6 @@ npm start
 
 8) You can search the exist tasks, tags, and lists at the search bar of each pages,
 
-9) You can also add/delete tags or lists manually by clicking on the tag or list bar on the top of the browser. (Or you can also point your browser to  http://locahost:3000/tags or http://locahost:3000/lists)
+9) You can also add/delete tags or lists manually by clicking on the tag or list bar on the top of the browser. (Or you can also point your browser to  http://localhost:3000/tags or http://localhost:3000/lists)
 
 
