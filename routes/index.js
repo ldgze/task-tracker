@@ -138,6 +138,25 @@ router.get("/tasks/:taskID/edit", async (req, res, next) => {
 //   }
 // });
 
+router.post("/tasks/:taskID/addTag", async (req, res, next) => {
+  console.log("Add Tag", req.body);
+  const taskID = req.params.taskID;
+  const tagID = req.body.tagID;
+
+  try {
+    let updateResult = await myDb.addTagIDToTaskID(taskID, tagID);
+    console.log("addTagIDToTaskID", updateResult);
+
+    if (updateResult && updateResult.changes === 1) {
+      res.redirect(`/tasks/${taskID}/edit?msg=Tag added`);
+    } else {
+      res.redirect(`/tasks/${taskID}/edit?msg=Error adding tag`);
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 // router.get("/references/:reference_id/delete", async (req, res, next) => {
 //   const reference_id = req.params.reference_id;
 

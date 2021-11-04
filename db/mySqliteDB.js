@@ -323,6 +323,33 @@ async function getTagsByTaskID(taskID) {
 //   }
 // }
 
+async function addTagIDToTaskID(taskID, tagID) {
+  console.log("addTagIDToTaskID", taskID, tagID);
+
+  const db = await open({
+    filename: "./db/taskDB.db",
+    driver: sqlite3.Database,
+  });
+
+  const stmt = await db.prepare(`
+    INSERT INTO
+    Tag_Task(taskID, tagID)
+    VALUES (@taskID, @tagID);
+    `);
+
+  const params = {
+    "@taskID": taskID,
+    "@tagID": tagID,
+  };
+
+  try {
+    return await stmt.run(params);
+  } finally {
+    await stmt.finalize();
+    db.close();
+  }
+}
+
 //module.exports.getReferences = getReferences;
 module.exports.getTasks = getTasks;
 //module.exports.getReferencesCount = getReferencesCount;
@@ -334,4 +361,4 @@ module.exports.getTaskByID = getTaskByID;
 //module.exports.deleteReferenceByID = deleteReferenceByID;
 //module.exports.getAuthorsByReferenceID = getAuthorsByReferenceID;
 module.exports.getTagsByTaskID = getTagsByTaskID;
-//module.exports.addAuthorIDToReferenceID = addAuthorIDToReferenceID;
+module.exports.addTagIDToTaskID = addTagIDToTaskID;
